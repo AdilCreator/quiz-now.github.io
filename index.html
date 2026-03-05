@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>HTML Knowledge Quiz Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="app gradient-mesh grain">
+      <!-- SECTION: Header -->
+      <header class="header shadow-soft">
+        <div class="header-main">
+          <div>
+            <p class="eyebrow">Interactive Web Challenge</p>
+            <h1>HTML Knowledge Quiz</h1>
+            <p class="subtitle">
+              Pick a level, race the timer, and prove how well you really know the
+              building blocks of the web.
+            </p>
+          </div>
+          <div class="header-meta">
+            <div class="meta-pill">
+              <span class="meta-label">Mode</span>
+              <span class="meta-value">Mixed questions</span>
+            </div>
+            <div class="meta-pill">
+              <span class="meta-label">Includes</span>
+              <span class="meta-value">Multiple‑choice · True/False · Short text</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <!-- SECTION: Game Shell -->
+        <section class="quiz-shell gradient-border shadow-soft">
+          <!-- Left: Controls & status -->
+          <aside class="sidebar">
+            <div class="level-select" aria-label="Select HTML level">
+              <h2 class="section-title">Choose a level</h2>
+              <div class="accent-line"></div>
+              <div class="level-buttons" role="list">
+                <button class="chip level-chip" data-level="basics" role="listitem">
+                  <span class="chip-title">HTML Basics</span>
+                  <span class="chip-subtitle">Tags, structure, elements</span>
+                </button>
+                <button class="chip level-chip" data-level="forms" role="listitem">
+                  <span class="chip-title">Forms & Inputs</span>
+                  <span class="chip-subtitle">Labels, inputs, validation</span>
+                </button>
+                <button class="chip level-chip" data-level="semantics" role="listitem">
+                  <span class="chip-title">Semantics</span>
+                  <span class="chip-subtitle">Meaningful markup</span>
+                </button>
+                <button class="chip level-chip" data-level="media" role="listitem">
+                  <span class="chip-title">Media & Tables</span>
+                  <span class="chip-subtitle">Images, video, tables</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="status-panel shadow-inner" aria-live="polite">
+              <div class="status-row">
+                <span class="status-label">Timer</span>
+                <div class="timer" aria-label="Time remaining">
+                  <span id="time-remaining">00:00</span>
+                  <span class="timer-mode" id="timer-mode">Per question</span>
+                </div>
+              </div>
+              <div class="status-row">
+                <span class="status-label">Score</span>
+                <div class="score-block">
+                  <span id="score">0</span>
+                  <span class="score-max">/ <span id="total-questions">0</span></span>
+                </div>
+              </div>
+              <div class="status-row">
+                <span class="status-label">Progress</span>
+                <div class="progress-shell" aria-label="Question progress">
+                  <div class="progress-bar" id="progress-bar"></div>
+                </div>
+                <span class="progress-count" id="progress-count">0 / 0</span>
+              </div>
+
+              <div class="status-row mode-toggle-row">
+                <span class="status-label">Timing</span>
+                <button class="toggle" id="timing-toggle" type="button" aria-pressed="true">
+                  <span class="toggle-knob"></span>
+                  <span class="toggle-labels">
+                    <span data-mode="question">Per question</span>
+                    <span data-mode="quiz">Whole quiz</span>
+                  </span>
+                </button>
+              </div>
+
+              <button class="btn primary" id="start-quiz">Start quiz</button>
+            </div>
+          </aside>
+
+          <!-- Right: Question area -->
+          <section class="question-area" aria-live="polite">
+            <div class="question-card">
+              <div class="question-meta">
+                <span class="pill" id="level-label">Select a level to begin</span>
+                <span class="pill pill-quiet" id="question-type-label"></span>
+              </div>
+
+              <div class="question-body">
+                <h2 class="question-text" id="question-text">
+                  Ready to test your HTML skills?
+                </h2>
+                <p class="question-helper" id="question-helper">
+                  Choose a level on the left, then hit “Start quiz”. Questions will
+                  appear here, one at a time.
+                </p>
+
+                <form class="answers" id="answers" aria-label="Answer options">
+                  <!-- Dynamic answer options injected by script.js -->
+                </form>
+              </div>
+
+              <footer class="question-footer">
+                <p class="feedback" id="feedback" aria-live="polite"></p>
+                <div class="footer-actions">
+                  <button class="btn ghost" id="skip-question" type="button" disabled>
+                    Skip
+                  </button>
+                  <button class="btn primary" id="submit-answer" type="button" disabled>
+                    Submit
+                  </button>
+                </div>
+              </footer>
+            </div>
+          </section>
+        </section>
+
+        <!-- SECTION: Results -->
+        <section class="results" id="results" hidden>
+          <div class="results-card shadow-soft">
+            <h2>Level complete</h2>
+            <p class="results-summary" id="results-summary"></p>
+            <dl class="results-stats">
+              <div class="stat">
+                <dt>Correct answers</dt>
+                <dd id="results-correct">0</dd>
+              </div>
+              <div class="stat">
+                <dt>Incorrect answers</dt>
+                <dd id="results-incorrect">0</dd>
+              </div>
+              <div class="stat">
+                <dt>Fastest answer</dt>
+                <dd id="results-fastest">–</dd>
+              </div>
+              <div class="stat">
+                <dt>Slowest answer</dt>
+                <dd id="results-slowest">–</dd>
+              </div>
+            </dl>
+            <div class="results-actions">
+              <button class="btn primary" id="play-again" type="button">Play again</button>
+              <button class="btn ghost" id="change-level" type="button">Change level</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <div class="floating-shape" aria-hidden="true"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
